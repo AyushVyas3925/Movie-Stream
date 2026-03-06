@@ -65,7 +65,11 @@ const Home = ({ searchQuery, moodQuery }) => {
 
                 setHasMore(data.page < data.total_pages);
             } catch (err) {
-                setError('Failed to fetch movies. Please check your API key.');
+                if (err.message && err.message.includes('Google AI API Error')) {
+                    setError(`AI Mood Matcher Unavailable: ${err.message}. You may have exceeded your free tier rate limit. Please wait 1 minute and try again.`);
+                } else {
+                    setError('Failed to fetch movies. Please check your TMDB API key or network connection.');
+                }
             } finally {
                 setLoading(false);
             }

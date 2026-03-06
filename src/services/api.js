@@ -58,12 +58,10 @@ export const getMovieByMoodUsingGemini = async (mood) => {
         movieTitle = movieTitle.replace(/["*]/g, '').replace(/\n/g, '');
 
         return movieTitle || 'The Matrix';
-    } catch (error) {
-        console.error('CRITICAL AI ERROR:', error.message);
-        console.error('If you see a 404 Not Found, your Google API Key might not have access to gemini-1.5-flash. You may need to create a new key at aistudio.google.com');
-        // If there is an auth or model error, return a specific generic fallback
-        return 'Everything Everywhere All at Once';
-    }
+  } catch (error) {
+    console.error('CRITICAL AI ERROR:', error.message);
+    throw new Error(`Google AI API Error: ${error.message}`);
+  }
 };
 
 export default tmdbApi;
